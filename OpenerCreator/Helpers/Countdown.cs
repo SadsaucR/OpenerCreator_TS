@@ -34,7 +34,7 @@ internal struct Countdown()
     internal void DrawCountdown()
     {
         if (Plugin.Config.IsCountdownEnabled == false || countdownStart == null ||
-            Plugin.ClientState.LocalPlayer!.StatusFlags.ToString().Contains(nameof(StatusFlags.InCombat)))
+            Plugin.ObjectTable.LocalPlayer!.StatusFlags.ToString().Contains(nameof(StatusFlags.InCombat)))
             return;
 
         var foregroundDrawList = ImGui.GetForegroundDrawList();
