@@ -5,8 +5,8 @@ using System.Numerics;
 using Dalamud.Interface.Utility;
 using Dalamud.Interface.Utility.Raii;
 using Dalamud.Interface.Windowing;
-using Dalamud.Bindings.ImGui;
 using Dalamud.Interface;
+using ImGuiNET;
 using OpenerCreator.Actions;
 using OpenerCreator.Helpers;
 using OpenerCreator.Managers;
@@ -492,7 +492,7 @@ public class OpenerCreatorWindow : Window, IDisposable
                 drawList.PushTextureID(GetIcon(action));
                 drawList.PrimReserve(6, 4);
 
-                var vtx = (ushort)drawList.VtxCurrentIdx;
+                var vtx = (ushort)drawList._VtxCurrentIdx;
                 drawList.PrimWriteVtx(center, new Vector2(0.5f, 0.5f), color);
 
                 for (var j = 0; j < 3; j++)
@@ -515,7 +515,7 @@ public class OpenerCreatorWindow : Window, IDisposable
         }
         else
         {
-            drawList.PushTextureID(IActionManager.GetUnknownActionTexture.GetWrapOrEmpty().Handle);
+            drawList.PushTextureID(IActionManager.GetUnknownActionTexture.GetWrapOrEmpty().ImGuiHandle);
             drawList.PrimReserve(6, 4);
             drawList.PrimRectUV(realPos, realPos + size, Vector2.Zero, Vector2.One, color);
             drawList.PopTextureID();
@@ -549,8 +549,8 @@ public class OpenerCreatorWindow : Window, IDisposable
         }
     }
 
-    private static ImTextureID GetIcon(uint id)
+    private static nint GetIcon(uint id)
     {
-        return PvEActions.GetIconTexture(id).GetWrapOrEmpty().Handle;
+        return PvEActions.GetIconTexture(id).GetWrapOrEmpty().ImGuiHandle;
     }
 }

@@ -1,7 +1,7 @@
 using System;
 using System.Numerics;
 using Dalamud.Interface.Utility.Raii;
-using Dalamud.Bindings.ImGui;
+using ImGuiNET;
 
 namespace OpenerCreator.Windows;
 
@@ -9,8 +9,7 @@ public static class Helper
 {
     internal static void CollapsingHeader(string label, Action action)
     {
-        if (ImGui.CollapsingHeader(label, ImGuiTreeNodeFlags.DefaultOpen))
-            action();
+        if (ImGui.CollapsingHeader(label, ImGuiTreeNodeFlags.DefaultOpen)) action();
     }
 
     internal static void Tooltip(string tooltip)

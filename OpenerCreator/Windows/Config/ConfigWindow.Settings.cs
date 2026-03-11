@@ -1,6 +1,6 @@
 using System;
 using Dalamud.Interface.Utility.Raii;
-using Dalamud.Bindings.ImGui;
+using ImGuiNET;
 
 namespace OpenerCreator.Windows.Config;
 
