@@ -15,8 +15,9 @@ internal struct Countdown()
 {
     private static readonly Vector2 CountdownNumberSize = new(240, 320);
 
-    private readonly ISharedImmediateTexture countdownGo =
-        Plugin.TextureProvider.GetFromGame($"ui/icon/121000/{LanguageCode}/121841_hr1.tex");
+    private ISharedImmediateTexture countdownGo =>
+    GetCountdownGoTexture();
+    //Plugin.TextureProvider.GetFromGame($"ui/icon/121000/{LanguageCode}/121841_hr1.tex");
 
     private readonly ISharedImmediateTexture countdownNumbers =
         Plugin.TextureProvider.GetFromGame("ui/uld/ScreenInfo_CountDown_hr1.tex");
@@ -26,10 +27,23 @@ internal struct Countdown()
         ClientLanguage.French => "fr",
         ClientLanguage.German => "de",
         ClientLanguage.Japanese => "ja",
-        ClientLanguage.ChineseSimplified => "chs",
-        ClientLanguage.ChineseTraditional => "zht",
+        ClientLanguage.ChineseSimplified => "cn",
+        ClientLanguage.ChineseTraditional => "tc",
         _ => "en"
     };
+
+    private ISharedImmediateTexture GetCountdownGoTexture()
+    {
+        var primaryPath = $"ui/icon/121000/{LanguageCode}/121841_hr1.tex";
+        var fallbackPath = "ui/icon/121000/en/121841_hr1.tex";
+
+        if (Plugin.DataManager.FileExists(primaryPath))
+        {
+            return Plugin.TextureProvider.GetFromGame(primaryPath);
+        }
+
+        return Plugin.TextureProvider.GetFromGame(fallbackPath);
+    }
 
     private Stopwatch? countdownStart;
 

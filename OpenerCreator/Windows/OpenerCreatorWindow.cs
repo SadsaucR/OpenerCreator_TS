@@ -189,7 +189,7 @@ public class OpenerCreatorWindow : Window, IDisposable
                     }
                     else
                     {
-                        Helper.Tooltip($"Invalid action id ({actionAt})");
+                        Helper.Tooltip($"無效技能 ID ({actionAt})");
                     }
                 }
 
@@ -229,7 +229,7 @@ public class OpenerCreatorWindow : Window, IDisposable
 
     private void DrawOpenerLoaderTab()
     {
-        using var tabItem = ImRaii.TabItem("Loader");
+        using var tabItem = ImRaii.TabItem("編輯器");
         if (!tabItem.Success)
             return;
 
@@ -243,8 +243,8 @@ public class OpenerCreatorWindow : Window, IDisposable
         using var tabBar = ImRaii.TabBar("###OpenersTab");
         if (tabBar.Success)
         {
-            DrawOpeners(defaultOpeners, "Default", OpenerManager.Instance.GetDefaultOpener);
-            DrawOpeners(customOpeners, "Saved", OpenerManager.Instance.GetOpener, true);
+            DrawOpeners(defaultOpeners, "預設", OpenerManager.Instance.GetDefaultOpener);
+            DrawOpeners(customOpeners, "儲存", OpenerManager.Instance.GetOpener, true);
         }
     }
 
@@ -252,7 +252,7 @@ public class OpenerCreatorWindow : Window, IDisposable
         List<Tuple<Jobs, List<string>>> openers, string prefix, Func<string, Jobs, List<int>> getOpener,
         bool delete = false)
     {
-        using var tabItem = ImRaii.TabItem($"{prefix} Openers");
+        using var tabItem = ImRaii.TabItem($"{prefix} 開場");
         if (!tabItem.Success)
             return;
 
@@ -262,13 +262,13 @@ public class OpenerCreatorWindow : Window, IDisposable
         {
             if (JobsExtensions.FilterBy(jobCategoryFilter, openerJob.Item1))
             {
-                Helper.CollapsingHeader($"{prefix} {openerJob.Item1} Openers", () =>
+                Helper.CollapsingHeader($"{prefix} {openerJob.Item1} 開場", () =>
                 {
                     foreach (var opener in openerJob.Item2)
                     {
                         ImGui.TextUnformatted(opener);
                         ImGui.SameLine();
-                        if (ImGui.Button($"Load##{prefix}#{opener}#{openerJob.Item1}"))
+                        if (ImGui.Button($"讀取##{prefix}#{opener}#{openerJob.Item1}"))
                         {
                             loadedActions.AddActionsByRef(getOpener(opener, openerJob.Item1));
                             OpenerManager.Instance.Loaded = loadedActions.GetActionsByRef();
@@ -277,7 +277,7 @@ public class OpenerCreatorWindow : Window, IDisposable
                         if (delete)
                         {
                             ImGui.SameLine();
-                            if (ImGui.Button($"Delete##{prefix}#{opener}"))
+                            if (ImGui.Button($"刪除##{prefix}#{opener}"))
                             {
                                 OpenerManager.Instance.DeleteOpener(opener, openerJob.Item1);
                                 OpenerManager.Instance.SaveOpeners();
@@ -292,7 +292,7 @@ public class OpenerCreatorWindow : Window, IDisposable
 
     private void DrawCreatorTab()
     {
-        using var tabItem = ImRaii.TabItem("Creator");
+        using var tabItem = ImRaii.TabItem("編輯器");
         if (!tabItem.Success)
             return;
 
@@ -300,21 +300,21 @@ public class OpenerCreatorWindow : Window, IDisposable
         if (!child.Success)
             return;
 
-        ImGui.InputText("Opener name", ref loadedActions.Name, 32);
+        ImGui.InputText("名稱", ref loadedActions.Name, 32);
 
-        ListFilter("Job filter", jobFilter, JobsExtensions.PrettyPrint, ref jobFilter);
-        ListFilter("Action type filter", actionTypeFilter, ActionTypesExtension.PrettyPrint, ref actionTypeFilter);
+        ListFilter("職業", jobFilter, JobsExtensions.PrettyPrint, ref jobFilter);
+        ListFilter("技能類型", actionTypeFilter, ActionTypesExtension.PrettyPrint, ref actionTypeFilter);
 
         // Search bar
-        if (ImGui.InputText("Search", ref searchAction, 32))
+        if (ImGui.InputText("搜尋技能", ref searchAction, 32))
         {
             actionsIds = PvEActions.Instance.GetNonRepeatedActionsByName(searchAction, jobFilter, actionTypeFilter);
             actionsIds.AddRange(GroupOfActions.GetFilteredGroups(searchAction, jobFilter, actionTypeFilter));
         }
 
-        ImGui.TextUnformatted($"{actionsIds.Count} Results");
+        ImGui.TextUnformatted($"{actionsIds.Count}個結果");
         ImGui.SameLine();
-        if (ImGui.Button("Add catch-all action"))
+        if (ImGui.Button("新增自選技能"))
         {
             loadedActions.AddAction(0);
             OpenerManager.Instance.Loaded = loadedActions.GetActionsByRef();
@@ -341,16 +341,16 @@ public class OpenerCreatorWindow : Window, IDisposable
             else if (GroupOfActions.TryGetDefault(actionId, out var group))
                 ImGui.TextUnformatted($"{group.Name}");
             else
-                ImGui.TextUnformatted($"Invalid action id ({actionId})");
+                ImGui.TextUnformatted($"無效技能 ID ({actionId})");
         }
 
         if (actionsIds.Count > 50)
-            ImGui.TextUnformatted("More than 50 results, limiting results shown");
+            ImGui.TextUnformatted("搜尋結果超過 50 筆，僅顯示前 50 筆內容");
     }
 
     private void DrawRecordActionsTab()
     {
-        using var tabItem = ImRaii.TabItem("Record Actions");
+        using var tabItem = ImRaii.TabItem("錄製動作");
         if (!tabItem.Success)
             return;
 
@@ -358,9 +358,9 @@ public class OpenerCreatorWindow : Window, IDisposable
         if (!child.Success)
             return;
 
-        ImGui.TextUnformatted("Start a countdown, record your actions and compare them with your opener");
+        ImGui.TextUnformatted("開啟倒數計時，錄製你的技能順序並與起手式進行比對。");
         ImGui.Spacing();
-        if (ImGui.Button("Start Recording"))
+        if (ImGui.Button("開始錄製"))
         {
             loadedActions.ClearWrongActions();
             countdown.StartCountdown();
@@ -373,14 +373,14 @@ public class OpenerCreatorWindow : Window, IDisposable
         }
 
         ImGui.SameLine();
-        if (ImGui.Button("Stop Recording"))
+        if (ImGui.Button("停止錄製"))
         {
             countdown.StopCountdown();
             recordingConfig.StopRecording();
         }
 
         ImGui.SameLine();
-        if (ImGui.Button("Clear Feedback"))
+        if (ImGui.Button("清除紀錄"))
         {
             recordingConfig.ClearFeedback();
             loadedActions.ClearWrongActions();
@@ -389,7 +389,7 @@ public class OpenerCreatorWindow : Window, IDisposable
         if (recordingConfig.IsRecording())
         {
             ImGui.SameLine();
-            ImGui.TextUnformatted("RECORDING");
+            ImGui.TextUnformatted("錄製中");
         }
 
         foreach (var line in recordingConfig.GetFeedback())
@@ -398,11 +398,11 @@ public class OpenerCreatorWindow : Window, IDisposable
 
     private static void DrawInfoTab()
     {
-        using var tabItem = ImRaii.TabItem("Info");
+        using var tabItem = ImRaii.TabItem("資訊");
         if (!tabItem.Success)
             return;
 
-        ImGui.TextUnformatted("Supported actions' groups:");
+        ImGui.TextUnformatted("支援的技能分組:");
         foreach (var groupsName in GroupOfActions.GroupsNames)
             ImGui.TextUnformatted($"- {groupsName}");
 
@@ -413,7 +413,7 @@ public class OpenerCreatorWindow : Window, IDisposable
 
     private void DrawClearActionsAndFeedback()
     {
-        if (ImGui.Button("Clear Actions"))
+        if (ImGui.Button("清空動作與反饋"))
         {
             loadedActions.ClearWrongActions();
             loadedActions.ClearActions();
@@ -423,7 +423,7 @@ public class OpenerCreatorWindow : Window, IDisposable
 
     private void DrawSaveOpener()
     {
-        if (ImGui.Button("Save Opener"))
+        if (ImGui.Button("儲存此開場"))
         {
             if (jobFilter != Jobs.ANY && loadedActions.HasName())
             {
@@ -438,21 +438,21 @@ public class OpenerCreatorWindow : Window, IDisposable
         if (saveOpenerInvalidConfig)
         {
             ImGui.SameLine();
-            ImGui.TextUnformatted("Error saving opener. Make sure you have selected your job and named the opener.");
+            ImGui.TextUnformatted("儲存失敗：請確保你已經選擇了職業並且輸入了開場名稱。");
         }
     }
 
     private void DrawJobCategoryFilters()
     {
-        DrawJobCategoryToggle("Tanks", JobCategory.Tank);
+        DrawJobCategoryToggle("坦克", JobCategory.Tank);
         ImGui.SameLine();
-        DrawJobCategoryToggle("Healers", JobCategory.Healer);
+        DrawJobCategoryToggle("治療", JobCategory.Healer);
         ImGui.SameLine();
-        DrawJobCategoryToggle("Melees", JobCategory.Melee);
+        DrawJobCategoryToggle("近戰", JobCategory.Melee);
         ImGui.SameLine();
-        DrawJobCategoryToggle("Physical Ranged", JobCategory.PhysicalRanged);
+        DrawJobCategoryToggle("物理遠程", JobCategory.PhysicalRanged);
         ImGui.SameLine();
-        DrawJobCategoryToggle("Casters", JobCategory.MagicalRanged);
+        DrawJobCategoryToggle("法系", JobCategory.MagicalRanged);
         return;
 
         void DrawJobCategoryToggle(string label, JobCategory jobCategory)

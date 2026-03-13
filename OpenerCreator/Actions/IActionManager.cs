@@ -5,8 +5,8 @@ namespace OpenerCreator.Actions;
 public interface IActionManager
 {
     static uint CatchAllActionId => 0;
-    static string CatchAllActionName => "Catch-All Action";
-    static string OldActionName => "Old Action";
+    static string CatchAllActionName => "萬用動作";
+    static string OldActionName => "舊版動作";
 
     static ISharedImmediateTexture GetUnknownActionTexture =>
         Plugin.TextureProvider.GetFromGame("ui/icon/000000/000786_hr1.tex");

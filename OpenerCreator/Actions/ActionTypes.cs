@@ -16,9 +16,9 @@ public static class ActionTypesExtension
     {
         return actionType switch
         {
-            ActionTypes.GCD => "GCD",
-            ActionTypes.OGCD => "oGCD",
-            _ => "Any"
+            ActionTypes.GCD => "戰技/魔法",
+            ActionTypes.OGCD => "能力技",
+            _ => "所有"
         };
     }
 

@@ -89,7 +89,7 @@ public class OpenerManager(IActionManager actions)
 
         if (Loaded.SequenceEqual(used))
         {
-            feedback.AddMessage(Feedback.MessageType.Success, "Great job! Opener executed perfectly.");
+            feedback.AddMessage(Feedback.MessageType.Success, "太棒了！開場循環打得非常完美!");
             provideFeedback(feedback);
             return;
         }
@@ -106,7 +106,7 @@ public class OpenerManager(IActionManager actions)
             {
                 error = true;
                 feedback.AddMessage(Feedback.MessageType.Error,
-                                    $"Difference in action {i + 1}: Substituted {intended} for {actions.GetActionName(actual)}");
+                                    $"第 {i + 1} 個動作不符：預期為 {intended}，但實際使用了 {actions.GetActionName(actual)}");
                 wrongAction(openerIndex);
 
                 if (ShouldShift(openerIndex, size, used[i])) shift++;
@@ -114,12 +114,12 @@ public class OpenerManager(IActionManager actions)
         }
 
         if (!error && shift == 0)
-            feedback.AddMessage(Feedback.MessageType.Success, "Great job! Opener executed perfectly.");
+            feedback.AddMessage(Feedback.MessageType.Success, "太棒了！開場循環打得非常完美!");
 
         if (shift != 0)
         {
             feedback.AddMessage(Feedback.MessageType.Info,
-                                $"You shifted your opener by {shift} {(shift == 1 ? "action" : "actions")}.");
+                                $"你的循環發生了 {shift} 個動作的偏移。");
         }
 
         provideFeedback(feedback);
@@ -163,7 +163,7 @@ public class OpenerManager(IActionManager actions)
         }
         catch (Exception ex)
         {
-            Plugin.PluginLog.Error(ex, "Failed to load Openers");
+            Plugin.PluginLog.Error(ex, "無法載入開場循環檔案");
             return new Dictionary<Jobs, Dictionary<string, List<int>>>();
         }
     }
@@ -177,7 +177,7 @@ public class OpenerManager(IActionManager actions)
         }
         catch (Exception ex)
         {
-            Plugin.PluginLog.Error(ex, "Failed to save Openers");
+            Plugin.PluginLog.Error(ex, "儲存開場循環檔案失敗");
         }
     }
 }
