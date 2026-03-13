@@ -26,6 +26,8 @@ internal struct Countdown()
         ClientLanguage.French => "fr",
         ClientLanguage.German => "de",
         ClientLanguage.Japanese => "ja",
+        ClientLanguage.ChineseSimplified => "chs",
+        ClientLanguage.ChineseTraditional => "zht",
         _ => "en"
     };
 

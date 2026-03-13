@@ -78,7 +78,8 @@ public class UsedActionHook : IDisposable
     {
         UsedActionHooked?.Original(casterEntityId, casterPtr, targetPos, header, effects, targetEntityIds);
 
-        if (!Plugin.PlayerState.IsLoaded || casterEntityId != Plugin.PlayerState.EntityId) return;
+        var player = Plugin.ClientState.LocalPlayer;
+        if (player == null || casterEntityId != player.EntityId) return;
 
         var actionId = header->ActionId;
         if (!Sheets.ActionSheet.TryGetRow(actionId, out var actionRow))
