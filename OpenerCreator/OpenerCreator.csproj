@@ -1,50 +1,25 @@
 <?xml version="1.0" encoding="utf-8"?>
-<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Dalamud.NET.Sdk/12.0.2">
     <PropertyGroup>
-        <TargetFramework>net9.0-windows7.0</TargetFramework>
+        <TargetFramework>net9.0-windows</TargetFramework>
         <Platforms>x64</Platforms>
         <Nullable>enable</Nullable>
         <LangVersion>latest</LangVersion>
         <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <ProduceReferenceAssembly>false</ProduceReferenceAssembly>
         <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+        <RestorePackagesWithLockFile>true</RestorePackagesWithLockFile>
         <CopyLocalLockFileAssemblies>true</CopyLocalLockFileAssemblies>
     </PropertyGroup>
 
     <PropertyGroup>
-        <DalamudLibPath>C:\Users\admin\Desktop\OpenerCreator_TS\lib\</DalamudLibPath>
+        <Authors>Infi, herulume, sevii</Authors>
+        <Version>0.4.0</Version>
+        <Description>Create your opener and practice with a striking dummy. Provides basic analysis.</Description>
+        <PackageProjectUrl>https://github.com/Infiziert90/OpenerCreator</PackageProjectUrl>
+        <PackageLicenseExpression>AGPL-3.0-or-later</PackageLicenseExpression>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
-
-    <ItemGroup>
-        <Reference Include="Dalamud">
-            <HintPath>$(DalamudLibPath)Dalamud.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="Lumina">
-            <HintPath>$(DalamudLibPath)Lumina.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="Lumina.Excel">
-            <HintPath>$(DalamudLibPath)Lumina.Excel.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="Newtonsoft.Json">
-            <HintPath>$(DalamudLibPath)Newtonsoft.Json.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="ImGui.NET">
-            <HintPath>$(DalamudLibPath)ImGui.NET.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-        <Reference Include="FFXIVClientStructs">
-            <HintPath>$(DalamudLibPath)FFXIVClientStructs.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-		<Reference Include="InteropGenerator.Runtime">
-            <HintPath>$(DalamudLibPath)InteropGenerator.Runtime.dll</HintPath>
-            <Private>False</Private>
-        </Reference>
-    </ItemGroup>
 
     <ItemGroup>
         <Content Include="..\Openers\openers.json">

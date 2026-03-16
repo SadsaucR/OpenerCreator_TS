@@ -95,15 +95,52 @@ public class PvEActions : IActionManager
         return PveActions
                .AsParallel()
                .Where(a =>
-                          a.Name.ToString().Contains(name, StringComparison.CurrentCultureIgnoreCase)
-                          && (ActionTypesExtension.GetType(a) == actionType || actionType == ActionTypes.ANY)
-                          && ((a.ClassJobCategory.ValueNullable?.Name != null
-                               && a.ClassJobCategory.Value.Name.ToString().Contains(job.ToString()))
-                              || job == Jobs.ANY)
-               )
+               {
+                   bool nameMatch = a.Name.ToString().Contains(name, StringComparison.OrdinalIgnoreCase);
+                   if (!nameMatch) return false;
+
+                   bool typeMatch = (actionType == ActionTypes.ANY || ActionTypesExtension.GetType(a) == actionType);
+                   if (!typeMatch) return false;
+
+                   if (job == Jobs.ANY) return true;
+
+                   var category = a.ClassJobCategory.Value;
+
+                   return JobMatchesCategory(category, job);
+               })
                .Select(a => (int)a.RowId)
                .OrderBy(id => id)
                .ToList();
+    }
+
+    private bool JobMatchesCategory(Lumina.Excel.Sheets.ClassJobCategory category, Jobs job)
+    {
+        return (int)job switch
+        {
+            1 or 19 => category.PLD,
+            2 or 20 => category.MNK,
+            3 or 21 => category.WAR,
+            4 or 22 => category.DRG,
+            5 or 23 => category.BRD,
+            6 or 24 => category.WHM,
+            7 or 25 => category.BLM,
+            26 or 27 => category.SMN,
+            28 => category.SCH,
+            29 or 30 => category.NIN,
+            31 => category.MCH,
+            32 => category.DRK,
+            33 => category.AST,
+            34 => category.SAM,
+            35 => category.RDM,
+            36 => category.BLU,
+            37 => category.GNB,
+            38 => category.DNC,
+            39 => category.RPR,
+            40 => category.SGE,
+            41 => category.VPR,
+            42 => category.PCT,
+            _ => false
+        };
     }
 
     public static bool IsPvEAction(Action a)

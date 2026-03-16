@@ -1,3 +1,5 @@
+using FFXIVClientStructs.FFXIV.Client.Graphics.Kernel;
+using Lumina.Excel.Sheets;
 using System;
 
 namespace OpenerCreator.Helpers;
@@ -6,37 +8,37 @@ public enum Jobs
 {
     ANY = 0,
 
-    // Tanks (坦克)
-    PLD = 19, // 騎士
-    WAR = 21, // 戰士
-    DRK = 32, // 暗黑騎士
-    GNB = 37, // 絕槍戰士
+    // Tanks 
+    PLD = 19,
+    WAR = 21,
+    DRK = 32,
+    GNB = 37,
 
-    // Healers (治療)
-    WHM = 24, // 白魔道士
-    SCH = 28, // 學者
-    AST = 33, // 占星術師
-    SGE = 40, // 賢者
+    // Healers
+    WHM = 24, 
+    SCH = 28, 
+    AST = 33, 
+    SGE = 40, 
 
-    // Melee (近戰輸出)
-    MNK = 20, // 武僧
-    DRG = 22, // 龍騎士
-    NIN = 30, // 忍者
-    SAM = 34, // 武士
-    RPR = 39, // 奪魂者
-    VPR = 41, // 毒蛇劍士 (7.0 新職業)
+    // Melee 
+    MNK = 20, 
+    DRG = 22, 
+    NIN = 30, 
+    SAM = 34, 
+    RPR = 39, 
+    VPR = 41, 
 
-    // Physical Ranged (遠程物理)
-    BRD = 23, // 吟遊詩人
-    MCH = 31, // 機工士
-    DNC = 38, // 舞者
+    // Physical Ranged 
+    BRD = 23,
+    MCH = 31,
+    DNC = 38,
 
-    // Magical Ranged (遠程魔法)
-    BLM = 25, // 黑魔道士
-    SMN = 27, // 召喚士
-    RDM = 35, // 赤魔道士
-    PCT = 42, // 繪靈法師 (7.0 新職業)
-    BLU = 36  // 青魔道士
+    // Magical Ranged 
+    BLM = 25, 
+    SMN = 27, 
+    RDM = 35, 
+    PCT = 42, 
+    BLU = 36  
 }
 
 [Flags]
@@ -54,33 +56,20 @@ public static class JobsExtensions
 {
     public static string PrettyPrint(this Jobs job)
     {
-        return job switch
-        {
-            Jobs.ANY => "全部",
-            Jobs.PLD => "騎士",
-            Jobs.WAR => "戰士",
-            Jobs.DRK => "暗黑騎士",
-            Jobs.GNB => "絕槍戰士",
-            Jobs.WHM => "白魔道士",
-            Jobs.SCH => "學者",
-            Jobs.AST => "占星術師",
-            Jobs.SGE => "賢者",
-            Jobs.MNK => "武僧",
-            Jobs.DRG => "龍騎士",
-            Jobs.NIN => "忍者",
-            Jobs.SAM => "武士",
-            Jobs.RPR => "奪魂者",
-            Jobs.VPR => "毒蛇劍士",
-            Jobs.BRD => "吟遊詩人",
-            Jobs.MCH => "機工士",
-            Jobs.DNC => "舞者",
-            Jobs.BLM => "黑魔道士",
-            Jobs.SMN => "召喚士",
-            Jobs.RDM => "赤魔道士",
-            Jobs.PCT => "繪靈法師",
-            Jobs.BLU => "青魔道士",
-            _ => job.ToString()
-        };
+        if (job == Jobs.ANY) return "全部職業";
+
+
+        var sheet = Plugin.DataManager.GetExcelSheet<ClassJob>();
+        if (sheet == null) return job.ToString();
+
+
+        var row = sheet.GetRow((uint)job);
+
+
+        if (string.IsNullOrEmpty(row.Name.ToString()))
+            return job.ToString();
+
+        return row.Name.ToString();
     }
 
     public static JobCategory GetCategory(this Jobs job)

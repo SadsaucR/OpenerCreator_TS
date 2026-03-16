@@ -56,7 +56,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
     [
         new GroupOfActions(
             -1,
-            "Dancer Step",
+            "舞者舞步",
             Jobs.DNC,
             [
                 15999, // Emboite
@@ -67,7 +67,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -2,
-            "Mudra",
+            "忍者結印",
             Jobs.NIN,
             [
                 2259,  // Ten
@@ -81,7 +81,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -3,
-            "Refulgent Arrow Proc",
+            "吟遊詩人觸發",
             Jobs.BRD,
             [
                 16495, // Burst Shot
@@ -90,7 +90,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -4,
-            "Verthunder/Veraero",
+            "赤魔觸發",
             Jobs.RDM,
             [
                 25855, // Verthunder III
@@ -99,7 +99,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -5,
-            "Saber/Starfall Dance",
+            "舞者劍舞流星",
             Jobs.DNC,
             [
                 16005, // Saber Dance
@@ -108,7 +108,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -6,
-            "Dancer Priority GCD",
+            "舞者優先級GCD",
             Jobs.DNC,
             [
                 16005, // Saber Dance
