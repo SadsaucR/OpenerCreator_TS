@@ -111,7 +111,7 @@ public class UsedActionHook : IDisposable
                 var f = new Feedback();
                 f.AddMessage(
                     Feedback.MessageType.Error,
-                    $"Difference in action {index + 1}: Substituted {intendedName} for {PvEActions.Instance.GetActionName((int)actionId)}"
+                    $"第 {index + 1} 個動作不符：預期為 {intendedName}，但實際使用了 {PvEActions.Instance.GetActionName((int)actionId)}"
                 );
                 ProvideFeedback(f);
                 StopRecording();

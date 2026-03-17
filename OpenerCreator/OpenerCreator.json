@@ -5,7 +5,7 @@
   "Description": "這是一款開場循環練習工具。你可以自訂各職業的起手序列，在木人練習時獲取即時的分析與反饋。",
   "InternalName": "openerCreator",
   "ApplicableVersion": "any",
-  "RepoURL": "https://github.com/Infiziert90/OpenerCreator",
+  "RepoURL": "https://github.com/SadsaucR/OpenerCreator_TS",
   "CategoryTags": [
     "jobs"
   ],
