@@ -90,7 +90,7 @@ public readonly struct GroupOfActions(int id, string name, Jobs job, IEnumerable
         ),
         new GroupOfActions(
             -4,
-            "赤魔觸發",
+            "赤魔優先級GCD",
             Jobs.RDM,
             [
                 25855, // Verthunder III

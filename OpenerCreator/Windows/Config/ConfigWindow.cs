@@ -7,7 +7,7 @@ namespace OpenerCreator.Windows.Config;
 
 public partial class ConfigWindow : Window, IDisposable
 {
-    public ConfigWindow() : base("Configuration##OCRTConfig")
+    public ConfigWindow() : base("插件設定##OCRTConfig")
     {
         SizeConstraints = new WindowSizeConstraints
         {

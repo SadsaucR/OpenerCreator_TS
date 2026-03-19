@@ -13,7 +13,7 @@ public partial class ConfigWindow
 
     private static void About()
     {
-        using var tabItem = ImRaii.TabItem("About");
+        using var tabItem = ImRaii.TabItem("關於");
         if (!tabItem.Success)
             return;
 
@@ -24,7 +24,7 @@ public partial class ConfigWindow
             {
                 ImGuiHelpers.ScaledDummy(5.0f);
 
-                ImGui.TextUnformatted("Author:");
+                ImGui.TextUnformatted("作者:");
                 ImGui.SameLine();
                 ImGui.TextColored(ImGuiColors.ParsedGold, Plugin.PluginInterface.Manifest.Author);
 
@@ -32,7 +32,7 @@ public partial class ConfigWindow
                 ImGui.SameLine();
                 ImGui.TextColored(ImGuiColors.ParsedGold, "@infi");
 
-                ImGui.TextUnformatted("Version:");
+                ImGui.TextUnformatted("版本:");
                 ImGui.SameLine();
                 ImGui.TextColored(ImGuiColors.ParsedOrange, Plugin.PluginInterface.Manifest.AssemblyVersion.ToString(3));
             }
@@ -46,7 +46,7 @@ public partial class ConfigWindow
         {
             using (ImRaii.PushColor(ImGuiCol.Button, ImGuiColors.ParsedBlue))
             {
-                if (ImGui.Button("Discord Thread"))
+                if (ImGui.Button("Discord 連結"))
                     Dalamud.Utility.Util.OpenLink("https://discord.com/channels/581875019861328007/1266895862680911975");
             }
 
@@ -54,7 +54,7 @@ public partial class ConfigWindow
 
             using (ImRaii.PushColor(ImGuiCol.Button, ImGuiColors.DPSRed))
             {
-                if (ImGui.Button("Issues"))
+                if (ImGui.Button("回報問題"))
                     Dalamud.Utility.Util.OpenLink("https://github.com/Infiziert90/OpenerCreator/issues");
             }
 
@@ -62,7 +62,7 @@ public partial class ConfigWindow
 
             using (ImRaii.PushColor(ImGuiCol.Button, new Vector4(0.12549f, 0.74902f, 0.33333f, 0.6f)))
             {
-                if (ImGui.Button("Ko-Fi Tip"))
+                if (ImGui.Button("贊助作者"))
                     Dalamud.Utility.Util.OpenLink("https://ko-fi.com/infiii");
             }
         }
